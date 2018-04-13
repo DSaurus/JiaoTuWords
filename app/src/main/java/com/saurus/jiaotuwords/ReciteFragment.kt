@@ -14,20 +14,47 @@ import kotlinx.android.synthetic.main.fragment_recite.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class ReciteFragment : Fragment() {
-    
+class ReciteFragment : Fragment(){
+    val wordList = ArrayList<Word>()
+    val waList = ArrayList<Word> ()
+    var wordIndex = 0
+    var wordStatus = 0
     @SuppressLint("SetTextI18n")
+    fun getWords(wordManage : WordManage, n : Int) {
+        val oldList = wordManage.getOldWordRecite(n)
+        var newList = ArrayList<Word>()
+        val m = n - oldList.size
+        if(m > 0){
+            newList = wordManage.getNewWord(m)
+        }
+        wordList += oldList
+        wordList += newList
+    }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_recite, container, false)
-
+        val wordManage = WordManage(activity)
+        getWords(wordManage, 40)
+        if(wordList.isEmpty()){
+            view.word.text = "没有单词！"
+            return view
+        }
+        wordIndex = 0
+        view.word.text = wordList[0].word
         view.wordsinfo.visibility = View.GONE
+
         view.understandtext.setOnClickListener {
-            _ ->
-            wordsinfo.text = "${wordsinfo.text}1"
+            wordManage.updateWord(wordList[wordIndex], 1-wordStatus)
+            wordIndex++
+            wordStatus = 0
+            view.word.text = wordList[wordIndex].word
+            view.wordsinfo.visibility = View.GONE
         }
         view.notunderstandtext.setOnClickListener {
-            wordsinfo.visibility = View.VISIBLE
+            view.wordsinfo.text = wordList[wordIndex].translate
+            view.wordsinfo.visibility = View.VISIBLE
+            if(wordStatus == 0) wordList.add(wordList[wordIndex])
+            wordStatus = 1
         }
         return view
     }

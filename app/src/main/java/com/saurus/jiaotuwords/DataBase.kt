@@ -43,9 +43,9 @@ class DataBase(context : Context, name : String) : SQLiteOpenHelper(context, nam
         private val CREATE_SENTENCE = "CREATE TABLE words( " +
                 "word_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "word TEXT," +
-                "translate TEXT" +
-                "recite_times INTEGER DEFAULT 0" +
-                "score INTEGER DEFAULT 0" +
+                "translate TEXT," +
+                "recite_times INTEGER DEFAULT 0," +
+                "score INTEGER DEFAULT 0," +
                 "last_time INTEGER DEFAULT 0" +
                 ");"
     }
