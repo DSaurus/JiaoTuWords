@@ -45,6 +45,8 @@ class WordManage (context: Context) {
         var words : String? = null
         words = buffer.readText()
         val wordString = words.split('#')
+        Log.e("words", wordString[0])
+        Log.e("words", words)
         wordString
                 .map { it.split('%') }
                 .forEach { db.insert_new_word(it[0], it[1]) }
