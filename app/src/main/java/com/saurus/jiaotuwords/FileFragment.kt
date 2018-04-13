@@ -62,7 +62,7 @@ class FileFragment : Fragment() {
         view.relativeLayout.setOnClickListener {
             Toast.makeText(fragActivity, "Loading!", Toast.LENGTH_LONG).show()
             val client = OkHttpClient()
-            val request = Request.Builder().url("https://raw.githubusercontent.com/DSaurus/JiaoTuWords/master/assets/word2.txt").build()
+            val request = Request.Builder().url("https://raw.githubusercontent.com/DSaurus/JiaoTuWords/master/assets/" + view.editText.text).build()
             val response = client.newCall(request).enqueue( object : Callback {
                 override fun onResponse(call: Call?, response: Response?) {
                     WordManage(fragActivity).importStringWord(response?.body()?.string())
@@ -71,7 +71,7 @@ class FileFragment : Fragment() {
                     })
                 }
                 override fun onFailure(call: Call?, e: IOException?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Toast.makeText(fragActivity, "404 Error!", Toast.LENGTH_SHORT).show()
                 }
 
             })

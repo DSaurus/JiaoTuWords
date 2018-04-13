@@ -49,7 +49,7 @@ class WordManage (context: Context) {
         Log.e("words", words)
         wordString
                 .map { it.split('%') }
-                .forEach { db.insert_new_word(it[0], it[1]) }
+                .forEach { db.insert_new_word(it[0].trim('\n'), it[1].trim('\n')) }
     }
     fun importFileWord(filename : String){
         val file = File(filename)
