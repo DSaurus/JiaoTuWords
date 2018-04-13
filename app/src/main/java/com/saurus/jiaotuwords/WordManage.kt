@@ -40,28 +40,25 @@ class WordManage (context: Context) {
         return word
     }
     fun importStringWord(string : String?){
-        Log.e("string", string)
         val input = StringReader(string)
         val buffer = BufferedReader(input)
-        var wordLine : String? = null
-        wordLine = buffer.readLine()
-        while(wordLine != null) {
-            val temp = wordLine.split(' ')
-            db.insert_new_word(temp[0], temp[1])
-            wordLine = buffer.readLine()
-        }
+        var words : String? = null
+        words = buffer.readText()
+        val wordString = words.split('#')
+        wordString
+                .map { it.split('%') }
+                .forEach { db.insert_new_word(it[0], it[1]) }
     }
     fun importFileWord(filename : String){
         val file = File(filename)
         val input = FileReader(file)
         val buffer = BufferedReader(input)
-        var wordLine : String? = null
-        wordLine = buffer.readLine()
-        while(wordLine != null) {
-            val temp = wordLine.split(' ')
-            db.insert_new_word(temp[0], temp[1])
-            wordLine = buffer.readLine()
-        }
+        var words : String? = null
+        words = buffer.readText()
+        val wordString = words.split('#')
+        wordString
+                .map { it.split('%') }
+                .forEach { db.insert_new_word(it[0], it[1]) }
     }
     fun updateWords(words : Array<Word>) {
         for(item in words) {
@@ -79,9 +76,9 @@ class WordManage (context: Context) {
         if(status == 0){
             word.score = word.score / 2
         } else {
-            word.score += 2000
+            word.score *= 2
         }
-        word.score = Math.max(word.score, 1000)
+        word.score = Math.max(word.score, 500)
         val pairArray = ArrayList<Pair<String, String>>()
         pairArray.add(Pair("word", word.word))
         pairArray.add(Pair("last_time", word.last_time.toString()))

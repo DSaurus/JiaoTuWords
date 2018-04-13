@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Study Finished!", Toast.LENGTH_SHORT).show()
         fragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
         isLearn = false
+        navigation.visibility = View.VISIBLE
     }
     override fun onBackPressed() {
         if(isLearn) {
