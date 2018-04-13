@@ -13,6 +13,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.util.Log
 import android.R.attr.data
+import android.widget.Toast
 import okhttp3.*
 import java.io.IOException
 
@@ -57,13 +58,17 @@ class FileFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_file, container, false)
+        val fragActivity = activity
         view.relativeLayout.setOnClickListener {
+            Toast.makeText(fragActivity, "Loading!", Toast.LENGTH_LONG).show()
             val client = OkHttpClient()
-            val request = Request.Builder().url("https://raw.githubusercontent.com/DSaurus/JiaoTuWords/master/assets/word1.txt").build()
+            val request = Request.Builder().url("https://raw.githubusercontent.com/DSaurus/JiaoTuWords/master/assets/word2.txt").build()
             val response = client.newCall(request).enqueue( object : Callback {
                 override fun onResponse(call: Call?, response: Response?) {
-                    WordManage(activity).importStringWord(response?.body()?.string())
-                    Log.e("Success!", "hahaha")
+                    WordManage(fragActivity).importStringWord(response?.body()?.string())
+                    fragActivity.runOnUiThread( {
+                        Toast.makeText(fragActivity, "Finished!", Toast.LENGTH_SHORT).show()
+                    })
                 }
                 override fun onFailure(call: Call?, e: IOException?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

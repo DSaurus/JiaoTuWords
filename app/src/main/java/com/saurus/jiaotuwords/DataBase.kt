@@ -10,14 +10,17 @@ import android.database.sqlite.SQLiteOpenHelper
  * Created by sao on 2018/4/12.
  */
 
-class DataBase(context : Context, name : String) : SQLiteOpenHelper(context, name, null, 1) {
-    override fun onUpgrade(db: SQLiteDatabase?, ver0: Int, p2: Int) {}
+class DataBase(context : Context, name : String) : SQLiteOpenHelper(context, name, null, 3) {
+    override fun onUpgrade(db: SQLiteDatabase?, ver0: Int, p2: Int) {
+        db?.execSQL("DROP TABLE words")
+        onCreate(db)
+    }
 
     fun insert_new_word(word : String, translation: String){
         writableDatabase.insert("words", null,
                 ContentValues().apply {
                     put("word", word)
-                    put("translation", translation)
+                    put("translate", translation)
                 })
     }
 
@@ -42,7 +45,7 @@ class DataBase(context : Context, name : String) : SQLiteOpenHelper(context, nam
     companion object {
         private val CREATE_SENTENCE = "CREATE TABLE words( " +
                 "word_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "word TEXT," +
+                "word TEXT UNIQUE," +
                 "translate TEXT," +
                 "recite_times INTEGER DEFAULT 0," +
                 "score INTEGER DEFAULT 0," +

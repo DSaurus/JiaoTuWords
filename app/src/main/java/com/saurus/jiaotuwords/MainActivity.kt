@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().replace(R.id.fragmentContainer, ReciteFragment()).commit()
         navigation.visibility = View.GONE
         isLearn = true
+    }
+    fun endLearn() {
+        Toast.makeText(this, "Study Finished!", Toast.LENGTH_SHORT).show()
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
+        isLearn = false
     }
     override fun onBackPressed() {
         if(isLearn) {

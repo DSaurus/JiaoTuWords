@@ -47,8 +47,12 @@ class ReciteFragment : Fragment(){
             wordManage.updateWord(wordList[wordIndex], 1-wordStatus)
             wordIndex++
             wordStatus = 0
-            view.word.text = wordList[wordIndex].word
-            view.wordsinfo.visibility = View.GONE
+            if(wordIndex >= wordList.size) {
+                (activity as MainActivity).endLearn()
+            } else {
+                view.word.text = wordList[wordIndex].word
+                view.wordsinfo.visibility = View.GONE
+            }
         }
         view.notunderstandtext.setOnClickListener {
             view.wordsinfo.text = wordList[wordIndex].translate
