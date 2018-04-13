@@ -34,7 +34,17 @@ class WordManage (context: Context) {
         )
         return word
     }
-
+    fun importStringWord(string : String?){
+        Log.e("string", string)
+        val input = StringReader(string)
+        val buffer = BufferedReader(input)
+        var wordLine : String? = null
+        wordLine = buffer.readLine()
+        while(wordLine != null) {
+            val temp = wordLine.split(' ')
+            db.insert_new_word(temp[0], temp[1])
+        }
+    }
     fun importFileWord(filename : String){
         val file = File(filename)
         val input = FileReader(file)
