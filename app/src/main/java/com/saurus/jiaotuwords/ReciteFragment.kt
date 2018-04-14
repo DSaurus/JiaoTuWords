@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_recite.*
@@ -42,11 +43,25 @@ class ReciteFragment : Fragment(){
         wordIndex = 0
         view.word.text = wordList[0].word
         view.wordsinfo.visibility = View.GONE
-
+        view.understandtext.setOnTouchListener {
+            v: View, event: MotionEvent ->
+            if (event.getAction() == MotionEvent.AXIS_PRESSURE) {
+                view.wordsinfo.text = wordList[wordIndex].translate
+                view.wordsinfo.visibility = View.VISIBLE
+                return@setOnTouchListener false
+            }
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                view.wordsinfo.visibility = View.GONE
+                return@setOnTouchListener false
+            }
+            return@setOnTouchListener false
+        }
         view.understandtext.setOnClickListener {
             wordManage.updateWord(wordList[wordIndex], 1-wordStatus)
             wordIndex++
             wordStatus = 0
+            view.progressBar.max - wordList.size
+            view.progressBar.progress = wordIndex
             if(wordIndex >= wordList.size) {
                 (activity as MainActivity).endLearn()
             } else {
