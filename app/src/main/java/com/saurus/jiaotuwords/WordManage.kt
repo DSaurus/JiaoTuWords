@@ -36,7 +36,6 @@ class WordManage (context: Context) {
                 cursor.getLong(cursor.getColumnIndex("score")),
                 cursor.getLong(cursor.getColumnIndex("last_time"))
         )
-        Log.e("word", word.toString())
         return word
     }
     fun importStringWord(string : String?){
@@ -45,8 +44,6 @@ class WordManage (context: Context) {
         var words : String? = null
         words = buffer.readText()
         val wordString = words.split('#')
-        Log.e("words", wordString[0])
-        Log.e("words", words)
         wordString
                 .map { it.split('%') }
                 .forEach { db.insert_new_word(it[0].trim('\n'), it[1].trim('\n')) }
@@ -102,7 +99,6 @@ class WordManage (context: Context) {
     private fun selectNewWord() : ArrayList<Word> {
         val cursor = db.select_word("score == 0", null, null)
         val arrayList = ArrayList<Word> ()
-        Log.e("debug", cursor?.count.toString())
         if(cursor?.count == 0) return arrayList
         while(cursor!!.moveToNext()){
             arrayList.add(parseWord(cursor))

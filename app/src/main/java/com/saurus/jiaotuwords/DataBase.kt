@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper
  * Created by sao on 2018/4/12.
  */
 
-class DataBase(context : Context, name : String) : SQLiteOpenHelper(context, name, null, 8) {
+class DataBase(context : Context, name : String) : SQLiteOpenHelper(context, name, null, 9) {
     override fun onUpgrade(db: SQLiteDatabase?, ver0: Int, p2: Int) {
         db?.execSQL("DROP TABLE words")
         onCreate(db)
