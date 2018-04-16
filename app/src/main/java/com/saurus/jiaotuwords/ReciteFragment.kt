@@ -60,7 +60,7 @@ class ReciteFragment : Fragment(){
             wordManage.updateWord(wordList[wordIndex], 1-wordStatus)
             wordIndex++
             wordStatus = 0
-            view.progressBar.max - wordList.size
+            view.progressBar.max = wordList.size
             view.progressBar.progress = wordIndex
             if(wordIndex >= wordList.size) {
                 (activity as MainActivity).endLearn()

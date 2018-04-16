@@ -109,7 +109,7 @@ class WordManage (context: Context) {
         val arrayList = selectOldWord()
         val reciteList = ArrayList<Word>()
         for(item in arrayList) {
-            if(reciteList.size > n) break
+            if(reciteList.size >= n) break
             if(item.score >= 12000) continue
             if(item.last_time + item.score*3600*24 < Date().time){
                 item.last_time = Date().time
@@ -122,7 +122,7 @@ class WordManage (context: Context) {
         val arrayList = selectNewWord()
         val newList = ArrayList<Word>()
         for(item in arrayList){
-            if(newList.size > n) break
+            if(newList.size >= n) break
             item.last_time = Date().time
             newList.add(item)
         }
